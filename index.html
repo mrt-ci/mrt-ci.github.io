@@ -3,11 +3,27 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="https://raw.githubusercontent.com/chrissrogers/jquery-deparam/master/jquery-deparam.min.js"></script>
         <!-- Surfly widget snippet -->
-        <script type="text/javascript">(function(){window['_surfly_settings']=window['_surfly_settings']||{
-        "widgetkey": "255717a430c541ff96c6a51e4e961d8f",
-        "apiserver": "https://surfly-s3.com/v2/",
-        };
-        var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src="//surfly-s3.com/static/js/widget.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n); })();
+        <script type="text/javascript">(function(){
+            window['_surfly_settings']=window['_surfly_settings']||{
+                "widgetkey": "255717a430c541ff96c6a51e4e961d8f",
+                "apiserver": "https://surfly-s3.com/v2/",
+            };
+            // Update settings from the query string
+            var query_string = window.location.search;
+            if (query_string.indexOf("?") === 0) {
+                query_string = query_string.substring(1);
+            }
+            var query_obj = $.deparam(query_string);
+            $.each(query_obj, function (key, value) {
+                if (value === "true") {
+                    query_obj[key] = true;
+                } else if (value === "false") {
+                    query_obj[key] = false;
+                }
+            });
+            $.extend(window._surfly_settings, query_obj);
+            var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src="//surfly-s3.com/static/js/widget.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n);
+        })();
         </script>
     </head>
     <body>
